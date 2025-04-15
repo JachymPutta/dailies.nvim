@@ -1,7 +1,7 @@
 local M = {}
 
 M.setup = function()
-  vim.api.nvim_create_user_command("RunDailies", M.run, {})
+  vim.api.nvim_create_user_command("Dailies", M.run, {})
 end
 
 M.run = function()
@@ -12,7 +12,7 @@ M.run = function()
   local output = output:sub(2, -3)
 
   vim.schedule(function()
-    vim.cmd("vsplit " .. vim.fn.fnameescape(output))
+    vim.cmd("edit " .. vim.fn.fnameescape(output))
   end)
 end
 
