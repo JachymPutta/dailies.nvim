@@ -10,47 +10,10 @@ The plugin itself can be install with any plugin manager.
 > NOTE: The plugin depends on having the dailies binary available on your PATH!
 > Refer to the [dailies repo](https://github.com/JachymPutta/dailies) for installation instruction
 
-### Nix Flakes & [home-manager](https://github.com/nix-community/home-manager)
-> NOTE: Samples are taken from [my dotfiles](https://github.com/JachymPutta/dotfiles)
+### Nix 
+> NOTE: Sample is taken from [my dotfiles](https://github.com/JachymPutta/dotfiles)
 
-1. **Add this and the dailies repo as inputs**
 ```nix
-inputs = {
-    dailies.url = "github:JachymPutta/dailies";
-    dailies-nvim = {
-      url = "github:JachymPutta/dailies.nvim";
-      flake = false;
-    };
-    ...
-}
-```
-2. **Overlay**
-```nix
-dailies = inputs.dailies.packages.${system}.dailies;
-vimPlugins = prev.vimPlugins // {
-  dailies-nvim = prev.vimUtils.buildVimPlugin {
-    name = "dailies-nvim";
-    pname = "dailies-nvim";
-    src = inputs.dailies-nvim;
-  };
-};
-```
-3. **Use the packages**
-```nix
-
-home = {
-    ...
-    packages =
-      with pkgs;
-      [
-        dailies
-        ...
-      ];
-};
-```
-and the plugin
-```nix
-
 programs.neovim = {
     enable = true;
     plugins = with pkgs.vimPlugins; [
